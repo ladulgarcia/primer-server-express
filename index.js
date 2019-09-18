@@ -4,6 +4,9 @@ const morgan = require('morgan')
 const app = express()
 //crear el servidor y su funcionalidad (req, res)
 
+//requiriendo rutas (OJO para finalizar)
+const routes = require('./routes');
+const routesApi = require('./routes-api')
 //settings
 app.set('appName', 'Mi primer server')
 app.set('views', __dirname + '/views')
@@ -26,23 +29,29 @@ app.use(morgan('combined'))
 
 
 //RUTAS
-//imagenes
-// app.get('/', (req, res) => {
-//   res.end('Hello World');
-// })
-
-app.get('/', (req, res) => {
-  res.render('index.ejs');
-})
-
-app.get('/login', (req, res) => {
-  res.render('login')
-})
+// require('./routes')
+app.use(routes);
+app.use('/api', routesApi);
 
 app.get('*', (req, res) => {
   res.end('Archivo no encontrado')
 })
+//imagenes
+// app.get('/', (req, res) => {
+//   res.end('Hello World');
+// })
+// ********OJO ME LLEVO ESTO A MI ARCHIVO DE ROUTES.js*********
+// app.get('/', (req, res) => {
+//   res.render('index.ejs');
+// })
 
+// app.get('/login', (req, res) => {
+//   res.render('login')
+// })
+
+// app.get('*', (req, res) => {
+//   res.end('Archivo no encontrado')
+// })
 
 app.listen(3000, function () {
   console.log('servidor funcionando') // esto se despliega en terminal
